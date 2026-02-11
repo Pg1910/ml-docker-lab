@@ -1,0 +1,24 @@
+services:
+  mlflow:
+    build:
+      context: ./mlflow
+    user: "0:0"
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////mlflow/backend/mlflow.db
+      - --serve-artifacts
+      - --artifacts-destination
+      - /mlflow/artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_backend:/mlflow/backend
+      - mlflow_artifacts:/mlflow/artifacts
+
+volumes:
+  mlflow_backend:
+  mlflow_artifacts:
